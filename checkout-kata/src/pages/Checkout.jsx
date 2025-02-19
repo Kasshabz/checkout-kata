@@ -7,17 +7,18 @@ const pricingRules = {
   C: { price: 20 },
   D: { price: 115 },
 };
+
 function Checkout() {
   const location = useLocation();
   const basket = location.state?.basket || [];
 
+  const itemCounts = basket.reduce((acc, item) => {
+    acc[item.id] = (acc[item.id] || 0) + 1;
+    return acc;
+  }, {});
+
   const calculateTotal = () => {
     let total = 0;
-    let itemCounts = {};
-
-    basket.forEach((item) => {
-      itemCounts[item.id] = (itemCounts[item.id] || 0) + 1;
-    });
 
     for (const id in itemCounts) {
       const count = itemCounts[id];
@@ -37,27 +38,33 @@ function Checkout() {
 
   return (
     <div className="p-4">
-      <h1 className="text-3xl font-bold mb-4">Checkout</h1>
+      <h1 className="text-4xl font-bold mb-6 text-center text-blue-800">
+        Checkout
+      </h1>
       {basket.length === 0 ? (
-        <p className="text-gray-500">Your basket is empty.</p>
+        <p className="text-gray-500 text-center">Your basket is empty.</p>
       ) : (
         <>
-          <ul className="mb-4">
-            {Object.entries(
-              basket.reduce((acc, item) => {
-                acc[item.id] = (acc[item.id] || 0) + 1;
-                return acc;
-              }, {})
-            ).map(([id, quantity]) => (
-              <li key={id} className="text-lg">
-                {id} x {quantity} - £
-                {((quantity * pricingRules[id].price) / 100).toFixed(2)}
+          <ul className="mb-6 border rounded-lg p-4 shadow-md bg-gray-100">
+            {Object.entries(itemCounts).map(([id, quantity]) => (
+              <li
+                key={id}
+                className="text-lg flex justify-between items-center py-2 border-b last:border-b-0">
+                <span className="font-semibold text-gray-700">
+                  {id} x {quantity}
+                </span>
+                <span className="text-gray-600">
+                  £{((quantity * pricingRules[id].price) / 100).toFixed(2)}
+                </span>
               </li>
             ))}
           </ul>
-          <p className="text-xl font-semibold">
-            Total: £{calculateTotal().toFixed(2)}
-          </p>
+          <div className="text-xl font-semibold text-right">
+            Total:{" "}
+            <span className="text-green-600">
+              £{calculateTotal().toFixed(2)}
+            </span>
+          </div>
         </>
       )}
     </div>
