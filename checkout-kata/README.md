@@ -1,8 +1,14 @@
-# React + Vite
+This project is a simple checkout system built using **React** and **Vite**. It mimics an e-commerce store where users can:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- Browse products
+- Add items to a basket
+- Navigate to the Checkout page
+- View an itemized breakdown of their basket
+- See a dynamically calculated total with special offers applied
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React**: For building a component-based UI
+- **Vite**: For fast development and modern build setup
+- **Tailwind CSS**: For rapid styling and a consistent UI design
+- **React Router**: For navigation between Home and Checkout pages
