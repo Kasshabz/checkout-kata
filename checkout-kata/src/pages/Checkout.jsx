@@ -2,8 +2,8 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 
 const pricingRules = {
-  A: { price: 50, special: { quantity: 3, price: 130 } }, // 3 for £1.30
-  B: { price: 30, special: { quantity: 2, price: 45 } }, // 2 for 45p
+  A: { price: 50, special: { quantity: 3, price: 130 } },
+  B: { price: 30, special: { quantity: 2, price: 45 } },
   C: { price: 20 },
   D: { price: 115 },
 };
@@ -37,20 +37,23 @@ function Checkout() {
   };
 
   return (
-    <div className="p-4">
-      <h1 className="text-4xl font-bold mb-6 text-center text-blue-800">
+    <div className="max-w-4xl mx-auto p-4">
+      <h1 className="text-4xl font-bold text-center mb-8 text-blue-800">
         Checkout
       </h1>
       {basket.length === 0 ? (
         <p className="text-gray-500 text-center">Your basket is empty.</p>
       ) : (
-        <>
-          <ul className="mb-6 border rounded-lg p-4 shadow-md bg-gray-100">
+        <div className="bg-white rounded-lg shadow-lg p-6">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4 border-b pb-2">
+            Order Summary
+          </h2>
+          <ul className="divide-y divide-gray-200 mb-6">
             {Object.entries(itemCounts).map(([id, quantity]) => (
               <li
                 key={id}
-                className="text-lg flex justify-between items-center py-2 border-b last:border-b-0">
-                <span className="font-semibold text-gray-700">
+                className="flex justify-between items-center py-4 hover:bg-gray-50 transition duration-200">
+                <span className="text-lg font-medium text-gray-700">
                   {id} x {quantity}
                 </span>
                 <span className="text-gray-600">
@@ -59,13 +62,13 @@ function Checkout() {
               </li>
             ))}
           </ul>
-          <div className="text-xl font-semibold text-right">
+          <div className="text-xl font-semibold text-right border-t pt-4">
             Total:{" "}
             <span className="text-green-600">
               £{calculateTotal().toFixed(2)}
             </span>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
