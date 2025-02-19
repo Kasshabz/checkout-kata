@@ -1,6 +1,16 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 
-function Checkout({ basket }) {
+const pricingRules = {
+  A: { price: 50, special: { quantity: 3, price: 130 } }, // 3 for £1.30
+  B: { price: 30, special: { quantity: 2, price: 45 } }, // 2 for 45p
+  C: { price: 20 },
+  D: { price: 115 },
+};
+function Checkout() {
+  const location = useLocation();
+  const basket = location.state?.basket || [];
+
   const calculateTotal = () => {
     let total = 0;
     let itemCounts = {};
@@ -8,13 +18,6 @@ function Checkout({ basket }) {
     basket.forEach((item) => {
       itemCounts[item.id] = (itemCounts[item.id] || 0) + 1;
     });
-
-    const pricingRules = {
-      A: { price: 50, special: { quantity: 3, price: 130 } }, // 3 for £1.30
-      B: { price: 30, special: { quantity: 2, price: 45 } }, // 2 for 45p
-      C: { price: 20 },
-      D: { price: 115 },
-    };
 
     for (const id in itemCounts) {
       const count = itemCounts[id];
@@ -47,7 +50,8 @@ function Checkout({ basket }) {
               }, {})
             ).map(([id, quantity]) => (
               <li key={id} className="text-lg">
-                {id} x {quantity}
+                {id} x {quantity} - £
+                {((quantity * pricingRules[id].price) / 100).toFixed(2)}
               </li>
             ))}
           </ul>
