@@ -31,7 +31,7 @@ function Home() {
 
   return (
     <div className="p-4">
-      <h1 className="text-4xl font-bold text-center mb-6 text-blue-800">
+      <h1 className="text-4xl font-bold text-center text-blue-800 border-b-4 border-blue-500 inline-block mx-auto mb-6">
         Checkout Kata
       </h1>
 
